@@ -1,0 +1,192 @@
+<ng-container *ngIf="mostrarHome">
+    <app-home ></app-home>
+  </ng-container>
+<div class = "content_all" *ngIf="!mostrarHome">
+    <div class="process_content">
+        <div class = "process_subcontent">
+            <div class="process_title" >
+                <div class = title (click)="RegresarProceso()"> 
+                    <img 
+                        width="27px"
+                        height="27px"
+                        src = "../../../assets/Icons/returnIcon.png"/>
+                    <h1>{{title}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class = "content_section">
+        <div class="content_section_title_detail">
+            <div class = "icon_header">
+                <img width="23px"
+                    height="23px"
+                    src = "../../../assets/Icons/calendar_Icon.png"/>
+                <h3 class="section_title">{{datein}}</h3>
+            </div >
+            <div class = "icon_header">
+            </div>
+        </div>
+        <div>
+            <h2 class="main_title">Elementos del SNT</h2>
+            <h6 class="sub_title">Aqui se enlistan todos los elementos correspondientes al año {{year}}</h6>
+        </div>
+
+
+
+        <div class="table-container">
+            <table class="styled-table">
+              <thead>
+                <tr class = "header">
+                  <th>N</th>
+                  <th>Elementos del SNT</th>
+                  <th>Etapa</th>
+                  <th>Fecha de notificacion</th>
+                  <th>Check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tableData" class = "row">
+                  <td>{{ item.numero }}</td>
+                  <td>{{ item.elemento }}</td>
+                  <td>{{ item.etapa }}</td>
+                  <td>{{ item.fecha_notificacion }}</td>
+                  <td>{{ item.check }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p *ngIf="tableData.length === 0">Sin ningún registro</p>
+            <button (click)="agregarFila()">Agregar</button>
+          </div>
+          <div class = "detail">
+            <p>Hola mundo</p>
+          </div>
+
+<!---
+
+
+
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+          
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Informe técnico de incumplimiento</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                    <mat-tab-group>
+                        <mat-tab label="Elaboración">                              
+                            <div class="table-container">
+                                <table class="styled-table">
+                                  <thead>
+                                    <tr >
+                                      <th>Número</th>
+                                      <th>Nombre</th>
+                                      <th>Responsable</th>
+                                      <th>Correo</th>
+                                      <th>Check</th>
+                                      <th>Ubicación</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let item of tableData">
+                                      <td>{{ item.numero }}</td>
+                                      <td>{{ item.nombre }}</td>
+                                      <td>{{ item.responsable }}</td>
+                                      <td>{{ item.correo }}</td>
+                                      <td>{{ item.check }}</td>
+                                      <td>{{ item.ubicacion }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <p *ngIf="tableData.length === 0">Sin ningún registro</p>
+                                <button (click)="agregarFila()">Agregar</button>
+                              </div>
+                              
+
+                        </mat-tab>
+                        <mat-tab label="Revisión">
+                            
+                        </mat-tab>
+                        <mat-tab label="Aprobación">
+                            
+                        </mat-tab>
+                        <mat-tab label="Memorándum">
+                            
+                        </mat-tab>
+                    </mat-tab-group>
+            </mat-accordion>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Informe legal de incumplimiento</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                
+            </mat-accordion>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Notificación Acto administrativo de inicio de sanción</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                
+            </mat-accordion>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Informe técnico Análisis de Descargos</span>
+                
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                <mat-tab-group>
+                    <mat-tab label="Elaboración">                              
+                      
+                    </mat-tab>
+              <mat-tab label="Revisión">
+                  
+              </mat-tab>
+              <mat-tab label="Aprobación">
+                  
+              </mat-tab>
+              <mat-tab label="Memorándum">
+                  
+              </mat-tab>
+                </mat-tab-group>
+            </mat-accordion>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Informe legal Análisis de Descargos</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                
+            </mat-accordion>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Dictamen</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                
+            </mat-accordion>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="setActivePanel('item1')" (closed)="setActivePanel('')">
+            <mat-expansion-panel-header>
+                <mat-checkbox class="check-box" (click)="$event.stopPropagation()"></mat-checkbox>
+                <span class = "span-expansion-panel">Resolución</span>
+            </mat-expansion-panel-header>
+            <mat-accordion>
+                
+            </mat-accordion>
+        </mat-expansion-panel>
+        
+    </div>
+</div>
+-->
+</div> 

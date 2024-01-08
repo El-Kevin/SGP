@@ -1,0 +1,52 @@
+/* Estilos para el contenedor principal del login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+}
+
+/* Estilos para el formulario de login */
+.login-form {
+    max-width: 300px;
+    min-width: 280px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h1{
+    margin: 10px 20px 10px 20px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+/* Estilos para el botón */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Estilos para los input y labels */
+.form-control {
+    margin-bottom: 15px;
+}
+
+/* Opcional: Estilos para el enlace de registro */
+.login-form a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-form a:hover {
+    text-decoration: underline;
+}
+

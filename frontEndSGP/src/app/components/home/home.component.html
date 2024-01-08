@@ -1,104 +1,104 @@
 
-
-<div class = "content_all">
-<div class="sidebar">
-    <ul>
-      <li>Proceso</li>
-      <li>Calendario</li>
-      <li>Recordatorios</li>
-    </ul>
-  </div>
-  <div class="process_content">
-    <div class = "process_subcontent">
-      <div class="process_title" >
-        <div class = title> 
-          <img 
-          width="45px"
-          height="45px"
-          src = "../../../assets/Icons/process_Icon.png">
-          <h1>PROCESO</h1>
-        </div>
-          <div class="spacer"></div>
-          <button class = "button" (click)="mostrarModal()">
-            Nuevo
-          </button>
-      </div>
-    </div>
-
-    <div class = "content_section">
-      <div class = "content_section_title">
-        Procesos Sancionatorio
-      </div>
-      <div class = "filter">
-        
-        <select id="yearFilter" (change)="filtrarPorAnio($event)">
-          <option value="" disabled selected>Selecciona un año</option>
-          <ng-container *ngFor="let item of obtenerAnios()">
-            <option [value]="item">{{ item }}</option>
-          </ng-container>
-        </select>
-        
-      </div>
-
-      <div class = "content_process_table">
-        <div class="table">
-          <div class="row header">
-            <div class="cell options">Opciones</div>
-            <div class="cell process">Proceso</div>
-            <div class="cell date_in">Fecha de Inicio</div>
-            <div class="cell year">Año del Proceso</div>
-            <div class="cell date_fin">Fecha de Fin</div>
-            <div class="cell etapa">Etapa</div>
-            <div class="cell status">Estado</div>
+    <ng-container *ngIf="mostrarDetailProcess">
+      <app-detail-process class = "detailProcess" [procesoSeleccionado]="procesoSeleccionado"></app-detail-process>
+    </ng-container>
+    <div class="process_content" *ngIf="!mostrarDetailProcess">
+      <div class = "process_subcontent">
+        <div class="process_title" >
+          <div class = title> 
+            <img 
+            width="45px"
+            height="45px"
+            src = "../../../assets/Icons/process_Icon.png">
+            <h1>PROCESO</h1>
           </div>
-        
-          <!-- Iteración sobre los elementos -->
-          <ng-container *ngFor="let item of processlistView">
-            <div class="row">
-              <div class="cell options">
-                <button (click)="editarItem(item)">Ed</button>
-                <button (click)="eliminarItem(item)">Eli</button>
-              </div>
-              <div class="cell process">{{ item.nombre_proceso }}</div>
-              <div class="cell date_in">{{ item.fecha_inicio }}</div>
-              <div class="cell year">{{ item.anio_proceso }}</div>
-              <div class="cell date_fin">{{ item.fecha_fin }}</div>
-              <div class="cell etapa">{{ item.etapa_proceso }}</div>
-              <div class="cell status">{{ item.estado_proceso }}</div>
+            <div class="spacer"></div>
+            <button class = "button" (click)="mostrarModal()">
+              Nuevo
+            </button>
+        </div>
+      </div>
+
+      <div class = "content_section">
+        <div class = "content_section_title">
+          Procesos Sancionatorio
+        </div>
+        <div class = "filter">
+          
+          <select id="yearFilter" (change)="filterForYear($event)">
+            <option value="" disabled selected>Selecciona un año</option>
+            <ng-container *ngFor="let item of getYears()">
+              <option [value]="item">{{ item }}</option>
+            </ng-container>
+          </select>
+          
+        </div>
+
+        <div class = "content_process_table">
+          <div class="table">
+            <table>
+              <tr class="header">
+                <th>Proceso</th>
+                <th>Año del Proceso</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Fin</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            
+              <!-- Iteración sobre los elementos -->
+              <tr *ngFor="let item of processlistView">
+                <td (click)="seleccionarProceso(item)">{{ item.nombre_proceso }}</td>
+                <td>{{ item.anio_proceso }}</td>
+                <td>{{ item.fecha_inicio }}</td>
+                <td>{{ item.fecha_fin }}</td>
+                <td>{{ item.estado_proceso }}</td>
+                <td >
+                  <button class="button_image" (click)="editarItem(item)">
+                    <img src="../../../assets/Icons/editarIcon.png" />
+                  </button>
+                  <button class="button_image" (click)="eliminarItem(item)">
+                    <img src="../../../assets/Icons/borrarIcon.png" />
+                  </button>
+                </td>
+              </tr>
+            </table>
+            
+
+
+          </div>
+          
+          <div class="modal" [class.active]="showModal">
+            <div class="modal-content">
+              <!-- Contenido del modal -->
+              <h2>{{title_Model}}</h2>
+              <form #processForm = "ngForm" (ngSubmit) = "onSubmit(processForm)">
+                <div class="form-group">
+                  <input type="text" id="nombreProceso" name="nombre_proceso" #nombre_proceso = "ngModel" [(ngModel)] = "newProcess.nombre_proceso" required>
+                  <label for="nombreProceso">Nombre del Proceso</label>
+                </div>
+                <div class="form-group">
+                  <input type="number" id="anioProceso" name="anio_proceso" #anio_proceso = "ngModel" [(ngModel)] = "newProcess.anio_proceso" required>
+                  <label for="anioProceso">Año del Proceso</label>
+                </div>
+                <div class="form-group">
+                  <input type="date" id="fechaProceso" name="fecha_inicio" #fecha_inicio = "ngModel" [(ngModel)] = "newProcess.fecha_inicio" required>
+                  <label for="fechaProceso">Fecha</label>
+                </div>
+                <div class="form-actions">
+                  <!-- Botones para enviar el formulario y cerrar el modal -->
+                  <button type="submit" value="Enviar">Guardar</button>
+                  <button type="button" (click)="cerrarModal()">Cancelar</button>
+                </div>
+              </form>
             </div>
-          </ng-container>
-        </div>
-        
-        <div class="modal" [class.active]="showModal">
-          <div class="modal-content">
-            <!-- Contenido del modal -->
-            <h2>Crear Nuevo Proceso</h2>
-            <form>
-              <div class="form-group">
-                <input type="text" id="nombreProceso" name="nombreProceso" required>
-                <label for="nombreProceso">Nombre del Proceso</label>
-              </div>
-              <div class="form-group">
-                <input type="date" id="fechaProceso" name="fechaProceso" required>
-                <label for="fechaProceso">Fecha</label>
-              </div>
-              <div class="form-group">
-                <input type="number" id="anioProceso" name="anioProceso" required>
-                <label for="anioProceso">Año del Proceso</label>
-              </div>
-              <div class="form-actions">
-                <!-- Botones para enviar el formulario y cerrar el modal -->
-                <button type="submit">Guardar</button>
-                <button type="button" (click)="cerrarModal()">Cancelar</button>
-              </div>
-            </form>
           </div>
+
+
         </div>
-
-
       </div>
     </div>
-  </div>
-</div>
+
+
 <!-- Resto del código -->
 

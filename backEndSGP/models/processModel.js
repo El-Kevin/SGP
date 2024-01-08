@@ -1,9 +1,7 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const DataTypes  = require('sequelize');
 
-const sequelize = new Sequelize('db_pruebas', 'postgres', 'Lluvia27@', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
+
+const sequelize = require('../db/connection');
 
 const Project = sequelize.define('proceso', {
   id: {
@@ -17,18 +15,19 @@ const Project = sequelize.define('proceso', {
   },
   fecha_inicio: {
     type: DataTypes.DATE,
+    allowNull: true,
   },
   anio_proceso: {
     type: DataTypes.INTEGER,
+    allowNull: true,
   },
   estado_proceso: {
     type: DataTypes.STRING,
-  },
-  etapa_proceso: {
-    type: DataTypes.STRING,
+    allowNull: true,
   },
   fecha_fin: {
     type: DataTypes.DATE,
+    allowNull: true,
   },
 }, {
   tableName: 'proceso', // Especifica el nombre de la tabla aquí

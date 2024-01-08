@@ -12,7 +12,7 @@ color: #333;*/
   }
 
   .toolbar {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -36,6 +36,7 @@ color: #333;*/
     margin: 50px auto;
     max-width: 100%;
     flex-direction: column;
+    flex: auto;
     height: 100%;
 
   }
@@ -51,28 +52,30 @@ color: #333;*/
     background-color: #1976d2;
     color: white; 
   }
-  
-  /*todo el contenido*/
-  
-  .content_all{
+   
 
+ .content-sidebar-process{
     display: flex;
-    height: 100%;
     width: 100%;
-    background-color: white;
+    height: 100%;
+ }
 
-  }
   /* Estilos del menú lateral */
-.sidebar {
+
+  .sidebar {
+    position: relative;
     width: 230px;
     background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    border-bottom: none;
     color: black;
     bottom: 0;
     left: 0;
-    border-bottom: none;
+    top: 0;
+    float: left;
   }
   
+
   .sidebar ul {
     list-style: none;
     padding: 0;
@@ -102,7 +105,17 @@ color: #333;*/
     color: white;
     font-weight: 600; 
   }
+
+  /*Estilo para el contenido del proceso*/
+  .content-process{
+    position: relative;
+    width: 100%;
+  }
+
+
+
   /* Estilos del contenido principal */
+  
   .process_content {
     flex: 1;
   }
@@ -130,14 +143,6 @@ color: #333;*/
     font-size: 25px;
     font-weight: 600;
   }
-  .button{
-    margin-right: 30px ;
-    border-radius: 15px;
-    padding: 8px 15px 8px 15px;
-    background-color: #1976d2;
-    color: white; 
-    border: none;
-  }
 
   .button:hover{
     background-color: white;
@@ -145,15 +150,26 @@ color: #333;*/
     color: #125699;
   }
 
+
+  /*todo el contenido*/
+  .content_all{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+  }
+ 
+
 /*Titulo y el filtro*/
+
 .content_section{
   background-color: white;
-  height: 100%;
+  min-height: 778px;
   padding-top: 10px;
   padding-right: 20px;
   padding-left: 30px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: none;
+  padding-bottom: 40px;
 }
 .content_section_title{
   font-size: 18px;
@@ -162,6 +178,7 @@ color: #333;*/
 .filter{
   padding: 10px 0px 10px 0px;
 }
+
 #yearFilter {
   padding: 8px;
   font-size: 14px;
@@ -175,73 +192,92 @@ color: #333;*/
 }
 
 /*Tabla*/
+
+
 .content_process_table{
   padding-top: 10px;
 }
+
 .table {
-  width: 100%;
+  width: 97%;
   display: flex;
   flex-direction: column;
   border-right:1px solid #E7E9F1;
   border-left: 5px solid #0073EA;
   border-radius: 4px;
+  overflow-x: auto;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
+.table td:nth-child(6){
+  text-align: right;
+  min-width: 120px;
+  width: 100px;
+  max-width: 150px;
+  padding: 5px 20px 5px 0px;
+}
+.table td:nth-child(1){
+  min-width: 250px;
+  width: 300px;
+  max-width: 350px;
+
 }
 
+.table td:nth-child(2){
+  min-width: 120px;
+  width: 170px;
+  max-width: 180px;
+
+}
+.table td:nth-child(3){
+  min-width: 200px;
+  width: 200px;
+  max-width: 180px;
+
+}
+.table td:nth-child(4){
+  min-width: 200px;
+  width: 200px;
+  max-width: 180px;
+
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #E7E9F1; /* Línea debajo de cada fila */
+  padding: 5px 0px 5px 20px;
+  text-align: left;
+}
+
+.table th {
+  border-top: 1px solid #E7E9F1; 
+}
 .header {
-  font-weight: bold;
   border-top: 1px solid #E7E9F1;
   
 }
-
-.cell {
-  flex: 1;
-  padding: 8px;
-  border-bottom: 1px solid #E7E9F1;
-  font-size: 12px;
+.header th {
+  padding: 15px 0px 15px 20px;
+  font-weight: 500;
 }
 
-.cell:last-child {
-  border-right: none;
+/*celdas*/
+
+
+.button_image{
+  background: none;
+  border: none;
+  padding: 8px 0px 8px 10px;
 }
 
 button {
-  padding: 4px 8px;
   cursor: pointer;
-}
-
-.cell.options {
-  flex: 0 0 100px; /* Ejemplo de ancho específico para la celda de opciones */
-}
-
-.cell.process {
-  flex: 0 0 300px; /* Ancho para la celda de Proceso */
-}
-
-.cell.date_in {
-  flex: 0 0 150px; /* Ancho para la celda de Fecha de Inicio */
-}
-
-.cell.year {
-  flex: 0 0 150px; /* Ancho para la celda de Año del Proceso */
-}
-
-.cell.date_fin {
-  flex: 0 0 150px; /* Ancho para la celda de Fecha de Fin */
-}
-
-.cell.etapa {
-  flex: 0 0 200px; /* Ancho para la celda de Etapa */
-}
-
-.cell.status {
-  flex: 1 0 auto; /* Ancho para la celda de Estado */
+  margin-right: 10px ;
+  border-radius: 15px;
+  padding: 8px 15px 8px 15px;
+  background-color: #1976d2;
+  color: white; 
+  border: none;
+  background-color: #1976d2;
 }
 
 /* Estilos del modal */
@@ -305,4 +341,111 @@ input:not(:placeholder-shown) + label {
   font-size: 24px;
   color: #333; /* Cambia el color del título si es necesario */
   margin-bottom: 20px;
+}
+
+/**/
+.span-expansion-panel{
+  font-size: 17px;
+  font-weight: 600;
+  color: #1A73E8;
+}
+.mat-expansion-indicator{
+  margin-right: 7px;
+
+}
+.mat-content {
+  display: flex;
+  align-items: center;
+}
+.mat-expansion-panel-body{
+  padding: 15px !important;
+}
+.mat-expansion-panel { 
+  overflow: hidden;
+  box-shadow: none !important; /* Elimina la sombra */
+  max-width: 950px; /* Ajusta el ancho máximo según tu preferencia */
+}
+
+.mat-expansion-panel-header {
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  border-bottom:2px solid #0073EA;
+}
+
+.mat-expansion-panel-header:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+
+/* Estilo para la caja de verificación */
+.check-box {
+  margin-left: 0px;
+}
+.mat-expansion-panel-header{
+padding: 0px !important;
+}
+
+/**/
+
+/* Estilos para los títulos de sección */
+.section_title {
+  font-size: 14px;
+  color: #333; /* Color del texto */
+  font-weight: normal;
+}
+
+/* Estilos para el título principal */
+.main_title {
+  font-size: 1.6em;
+  color: #3C4043; /* Color azul */
+  margin-bottom: 10px; /* Espacio más grande bajo el título */
+  font-weight: 600;
+}
+
+/* Estilos para el subtítulo */
+.sub_title {
+  font-size: 15px;
+  color: #666; /* Color del texto más claro */
+  margin-top: 5px; /* Espacio sobre el subtítulo */
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+.icon_header{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.icon_header img{
+
+  margin-right: 15px;
+}
+
+
+
+
+
+
+.custom-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 45px;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center;
+ /* Ajusta el espacio entre el label y el input */
+}
+
+#numeroFilas{
+  max-width: 70px;
+  margin-left: 10px;
+  margin-right: 50px;
+  max-height: 30px;
+}
+
+.detailProcess{
+  width: 100%;
 }

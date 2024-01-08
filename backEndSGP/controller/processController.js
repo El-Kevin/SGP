@@ -1,4 +1,5 @@
 const ProcessModel = require('../models/processModel');
+
 const controller = {
     home: function(req, res) {
         return res.status(200).send({
@@ -12,7 +13,6 @@ const controller = {
           fecha_inicio,
           anio_proceso,
           estado_proceso,
-          etapa_proceso,
           fecha_fin
         })
           .then(newProcess => {
@@ -64,7 +64,6 @@ const controller = {
             fecha_inicio,
             anio_proceso,
             estado_proceso,
-            etapa_proceso,
             fecha_fin
         }, {
             where: {

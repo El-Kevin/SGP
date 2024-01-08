@@ -11,22 +11,51 @@ import { Global } from 'src/app/services/global';
 
 
 export class HomeComponent implements OnInit {
-
+  public newProcess: Process;
   public process: Process[];
   public processlistView: Process[];
+  public title_Model: String;
   public url: string;
-  tuListaDeDatos: any[] = []; // Lista filtrada de datos
+  public showModal = false;
+  
+  mostrarDetailProcess: boolean = false;
+  procesoSeleccionado: any = null; // Asegúrate de tener una variable para el proceso seleccionado
+
+  seleccionarProceso(item: any) {
+    this.procesoSeleccionado = item;
+    this.mostrarDetailProcess = true; // Mostrar DetailProcessComponent al seleccionar un proceso
+  }
   constructor(
     private _processService: ProcessService
   ){
+    this.title_Model = '';
     this.process = [];
     this.processlistView = []
     this.url = Global.url;  
+    this.newProcess = new Process(
+                                    '',
+                                    '',
+                                    new Date(new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }).split('/').reverse().join('-')),
+                                    new Date().getFullYear(),
+                                    'En proceso',
+                                    undefined,
+    );
+  };
+
+  restarVariable(){
+    this.newProcess = new Process(
+      '',
+      '',
+      new Date(new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    .split('/').reverse().join('-')),
+      new Date().getFullYear(),
+      'En proceso',
+      undefined,
+    );
   }
 
   ngOnInit(): void {
     this.getProcess();
-    
   }
 
   getProcess(){
@@ -36,46 +65,66 @@ export class HomeComponent implements OnInit {
           this.process = Response.process;
           this.processlistView = this.process;
         }
-        console.log(Response.process[0].id);
-        console.log('soy process', this.process);
-        console.log(this.process[0].anio_proceso)
-
       },
       error =>{
         console.log(<any>error)
       }
     );
-    
   }
   
-  obtenerAnios(): number[] {
+  getYears(): number[] {
     const anios = this.process.map(item => item.anio_proceso);
     return [...new Set(anios)];
   }
 
-
-  filtrarPorAnio(event: Event) {
+  filterForYear(event: Event) {
     const anioSeleccionado = (event.target as HTMLSelectElement).value;
     if (!anioSeleccionado) {
       this.processlistView = [...this.process];
     } else {
       this.processlistView = this.process.filter(item => item.anio_proceso.toString() === anioSeleccionado);
     }
-    
   }
 
+  editarItem(item: Process) {
+    this.title_Model = 'Editar';
+    this.showModal = true;
+    this.newProcess = item;
+  }
 
-  editarItem(item: any) {
-    // Lógica para editar el elemento
-    console.log('Editar:', item);
-    // Puedes abrir un formulario de edición o realizar alguna acción de edición
+  onSubmit(form: any){
+    if(this.title_Model == 'Editar'){
+      this.newProcess.nombre_proceso = form.value.nombre_proceso;
+      this.newProcess.fecha_inicio = form.value.fecha_inicio;
+      this.newProcess.anio_proceso = form.value.anio_proceso;
+      this._processService.updateProcess(this.newProcess).subscribe(
+        Response => {
+          this.getProcess()
+          form.reset();
+          this.cerrarModal();
+        },
+        err =>{
+          console.log(<any>err)
+        }
+      );
+    }else{
+      this._processService.saveProcess(this.newProcess).subscribe(
+        Response =>{
+          form.reset();
+          this.cerrarModal();
+          this.getProcess();
+        },
+        err =>{
+          console.log(<any>err)
+        }
+      );
+    }  
   }
 
   eliminarItem(item: any) {
     if (item !== null) {
       this._processService.deleteProcess(item.id).subscribe(
         Response => {
-          console.log('Eliminar:', item);
           this.getProcess()
         },
         error =>{
@@ -85,14 +134,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  showModal = true;
-
   mostrarModal() {
+    this.title_Model = 'Crear Proceso';
     this.showModal = true;
+    this.restarVariable();
   }
 
   cerrarModal() {
     this.showModal = false;
+    this.getProcess()
   }
 
+  
 }
