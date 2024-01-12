@@ -1,17 +1,17 @@
 const DataTypes  = require('sequelize');
 const sequelize = require('../db/connection');
 const User = sequelize.define('user_table', {
-    id: {
+    id_user: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    user_name: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false
     },
-    password: {
+    user_password: {
       type: DataTypes.STRING,
       allowNull: false
     }

@@ -1,11 +1,14 @@
-export class Process {
+
+  export class Process {
     constructor(
-      public id: string,
-      public nombre_proceso: string,
-      public fecha_inicio: Date,
-      public anio_proceso: number,
-      public estado_proceso: string,
-      public fecha_fin?: Date
+      public id_process: string,
+      public process_name: string,
+      public start_date: Date,
+      public process_year: number,
+      public process_status: string,
+      public user_table_id?: number,
+      public end_date?: Date
+    
     ) {}
   }
   

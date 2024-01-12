@@ -1,36 +1,42 @@
 const DataTypes  = require('sequelize');
-
-
+const User = require('./userModel');
 const sequelize = require('../db/connection');
-
-const Project = sequelize.define('proceso', {
-  id: {
+const Project = sequelize.define('process_table', {
+  id_process : {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  nombre_proceso: {
+  process_name: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  fecha_inicio: {
+  start_date: {
     type: DataTypes.DATE,
     allowNull: true,
   },
-  anio_proceso: {
+  process_year: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  estado_proceso: {
+  process_status: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  fecha_fin: {
+  end_date: {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  user_table_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User, // Modelo de la tabla user_table
+      key: 'id_user', // Clave primaria referenciada en user_table
+    },
+    allowNull: true,
+  }
 }, {
-  tableName: 'proceso', // Especifica el nombre de la tabla aquí
+  tableName: 'process_table', // Especifica el nombre de la tabla aquí
   timestamps: false // Evita la creación automática de createdAt y updatedAt
 });
 

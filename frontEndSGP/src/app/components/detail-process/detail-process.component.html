@@ -41,25 +41,59 @@
                   <th>Etapa</th>
                   <th>Fecha de notificacion</th>
                   <th>Check</th>
+                  <th></th>
+                  
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of tableData" class = "row">
-                  <td>{{ item.numero }}</td>
-                  <td>{{ item.elemento }}</td>
-                  <td>{{ item.etapa }}</td>
-                  <td>{{ item.fecha_notificacion }}</td>
-                  <td>{{ item.check }}</td>
-                </tr>
+                <tr *ngFor="let item of tableData" class="row" >
+                    <td>1</td>
+                    <td>{{ item.elements_snt }}</td>
+                    <td>{{ item.stage_detail }}</td>
+                    <td>{{ item.notification_date }}</td>
+                   
+                    <td >
+                      <input class="checkbox-cell custom-checkbox" type="checkbox" [checked]="item.check_status"  disabled>
+                    </td>
+                    <td >
+                     
+                        <button class="button_image" >
+                            <img src="../../../assets/Icons/editarIcon.png" (click)="editarItem(item)" />
+                          </button>
+                          <button class="button_image" >
+                            <img src="../../../assets/Icons/borrarIcon.png" (click)="deleteItem(item)"/>
+                          </button>
+                    </td>
+                  </tr>
+                  
               </tbody>
             </table>
             <p *ngIf="tableData.length === 0">Sin ningún registro</p>
-            <button (click)="agregarFila()">Agregar</button>
+            <button (click)="mostrarModal()">Agregar</button>
           </div>
           <div class = "detail">
             <p>Hola mundo</p>
+            
           </div>
 
+
+          <div class="modal" [class.active]="showModal" >
+            <div class="modal-content">
+              <!-- Contenido del modal -->
+              <h2>{{title_Model}}</h2>
+              <form #processDetailForm = "ngForm" (ngSubmit) = "onSubmit(processDetailForm)">
+                <div class="form-group">
+                  <input type="text" id="nombreProceso" name="nombre_proceso" #nombre_proceso = "ngModel" [(ngModel)] = "newDetail_Process.elements_snt"required>
+                  <label for="nombreProceso">Nombre del elemento SNT</label>
+                </div>
+                <div class="form-actions">
+                  <!-- Botones para enviar el formulario y cerrar el modal -->
+                  <button type="submit" value="Enviar">Guardar</button>
+                  <button type="button" (click)="cerrarModal()">Cancelar</button>
+                </div>
+              </form>
+            </div>
+          </div>
 <!---
 
 

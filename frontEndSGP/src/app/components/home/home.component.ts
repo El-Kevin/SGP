@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
                                     new Date().getFullYear(),
                                     'En proceso',
                                     undefined,
+                                    undefined
     );
   };
 
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
       new Date().getFullYear(),
       'En proceso',
       undefined,
+      undefined,
     );
   }
 
@@ -61,9 +63,11 @@ export class HomeComponent implements OnInit {
   getProcess(){
     this._processService.getProcess().subscribe(
       Response => {
-        if(Response.process){
-          this.process = Response.process;
+        if(Response.processes){
+          this.process = Response.processes;
+          
           this.processlistView = this.process;
+          
         }
       },
       error =>{
@@ -73,7 +77,7 @@ export class HomeComponent implements OnInit {
   }
   
   getYears(): number[] {
-    const anios = this.process.map(item => item.anio_proceso);
+    const anios = this.process.map(item => item.process_year);
     return [...new Set(anios)];
   }
 
@@ -82,7 +86,7 @@ export class HomeComponent implements OnInit {
     if (!anioSeleccionado) {
       this.processlistView = [...this.process];
     } else {
-      this.processlistView = this.process.filter(item => item.anio_proceso.toString() === anioSeleccionado);
+      this.processlistView = this.process.filter(item => item.process_year.toString() === anioSeleccionado);
     }
   }
 
@@ -93,38 +97,54 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(form: any){
-    if(this.title_Model == 'Editar'){
-      this.newProcess.nombre_proceso = form.value.nombre_proceso;
-      this.newProcess.fecha_inicio = form.value.fecha_inicio;
-      this.newProcess.anio_proceso = form.value.anio_proceso;
-      this._processService.updateProcess(this.newProcess).subscribe(
-        Response => {
-          this.getProcess()
-          form.reset();
-          this.cerrarModal();
-        },
-        err =>{
-          console.log(<any>err)
-        }
-      );
-    }else{
-      this._processService.saveProcess(this.newProcess).subscribe(
-        Response =>{
-          form.reset();
-          this.cerrarModal();
-          this.getProcess();
-        },
-        err =>{
-          console.log(<any>err)
-        }
-      );
-    }  
+    const id_user = localStorage.getItem('id_user'); // Obteniendo id_user del localStorage
+    if (id_user) {
+      if (this.title_Model == 'Editar') {
+        this.newProcess.process_name = form.value.nombre_proceso;
+        this.newProcess.start_date = form.value.fecha_inicio;
+        this.newProcess.process_year = form.value.anio_proceso;
+        this.newProcess.user_table_id = parseInt(id_user); // Asignando id_user a user_table_id
+  
+        this._processService.updateProcess(this.newProcess).subscribe(
+          Response => {
+            this.getProcess();
+            form.reset();
+            this.cerrarModal();
+          },
+          err => {
+            console.log(<any>err);
+          }
+        );
+      } else {
+        this.newProcess.process_name = form.value.nombre_proceso;
+        this.newProcess.start_date = form.value.fecha_inicio;
+        this.newProcess.process_year = form.value.anio_proceso;
+        this.newProcess.user_table_id = parseInt(id_user); // Asignando id_user a user_table_id
+  
+        this._processService.saveProcess(this.newProcess).subscribe(
+          Response => {
+            form.reset();
+            this.cerrarModal();
+            this.getProcess();
+          },
+          err => {
+            console.log(<any>err);
+          }
+        );
+      }
+    } else {
+      console.log('El id_user no está disponible en el localStorage');
+      // Puedes manejar aquí la lógica si id_user no está disponible en el localStorage
+    }
   }
+  
 
   eliminarItem(item: any) {
+    console.log(item)
     if (item !== null) {
-      this._processService.deleteProcess(item.id).subscribe(
+      this._processService.deleteProcess(item.id_process).subscribe(
         Response => {
+          console.log(Response);
           this.getProcess()
         },
         error =>{

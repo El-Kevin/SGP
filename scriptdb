@@ -1,0 +1,62 @@
+CREATE TABLE user_table (
+    id_user SERIAL PRIMARY KEY,
+    user_name VARCHAR(50),
+    user_password VARCHAR(100)
+);
+
+CREATE TABLE process_table (
+    id_process SERIAL PRIMARY KEY,
+    process_name VARCHAR(100),
+    start_date DATE,	
+    end_date DATE,
+    process_year INTEGER,
+    process_status VARCHAR(50),
+    user_table_id INTEGER REFERENCES user_table(id_user)
+);
+
+CREATE TABLE detail_process (
+    id_detail SERIAL PRIMARY KEY,
+    elements_SNT VARCHAR(100),
+    stage VARCHAR(50),
+    notification_date DATE,
+    check_status BOOLEAN,
+    process_id INTEGER REFERENCES process_table(id_process)
+);
+
+CREATE TABLE technical_report_elaboration_table (
+    id_technical_report SERIAL PRIMARY KEY,
+    name_report VARCHAR(100),
+    responsible VARCHAR(50),
+    document_elaboration DATE,
+    check_elaboration BOOLEAN,
+    detail_id INTEGER REFERENCES detail_process(id_detail)
+);
+
+
+
+	CREATE TABLE technical_report_revision_table (
+		id_report_technical_revision SERIAL PRIMARY KEY,
+		id_technical_report INTEGER REFERENCES technical_report_elaboration_table(id_technical_report),
+		name_report_revision VARCHAR(100),
+		responsible VARCHAR(50),
+		check_revision BOOLEAN
+	);
+
+	CREATE TABLE technical_report_aprobacion_table (
+		id_report_technical_aprobacion SERIAL PRIMARY KEY,
+		id_report_technical_revision INTEGER REFERENCES technical_report_revision_table(id_report_technical_revision),
+		name_report_aprobacion VARCHAR(100),
+		responsible VARCHAR(50),
+		check_aprobacion BOOLEAN
+	);
+
+	CREATE TABLE technical_report_memorandum (
+		id_report_memorandum SERIAL PRIMARY KEY,
+		id_report_technical_aprobacion INTEGER REFERENCES technical_report_aprobacion_table(id_report_technical_aprobacion),
+		name_report_memorandum VARCHAR(100),
+		responsible VARCHAR(50),
+		check_memorandum BOOLEAN
+	);
+
+select * from user_table
+select * from process_table

@@ -9,7 +9,7 @@ import { ProcessService } from 'src/app/services/process.service';
   providers: [ProcessService]
 })
 export class LoginComponent implements OnInit{
-  name: string = '';
+  username: string = '';
   password: string = '';
   constructor(private _processService: ProcessService, 
     private router: Router){
@@ -21,20 +21,23 @@ export class LoginComponent implements OnInit{
 
 login(){
   //validar datos
-  if(this.name == '' || this.password == ''){
+  if(this.username == '' || this.password == ''){
     console.log("faltan datos")
     return
   }
   //creamos el body
   const user: User = {
-    name: this.name,
+    username: this.username,
     password: this.password
   }
   console.log(user)
   this._processService.logIn(user).subscribe(
     Response => {
       localStorage.setItem('token', Response.token)
+      localStorage.setItem('id_user', Response.id_user)
       this.router.navigate(['/process']);
+      //console.log("todo bien muy bien")
+      //console.log(Response.token, Response.username, Response.id_user)
       
       console.log(Response);
     },

@@ -5,7 +5,7 @@ const port = 3700;
 const connectionData = {
     user: 'postgres',
     host: 'localhost',
-    database: 'db_pruebas',
+    database: 'BDD_ SPG_SISTEM',
     password: 'Lluvia27@',
     port: 5432,
 };

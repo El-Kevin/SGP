@@ -48,11 +48,11 @@
             
               <!-- Iteración sobre los elementos -->
               <tr *ngFor="let item of processlistView">
-                <td (click)="seleccionarProceso(item)">{{ item.nombre_proceso }}</td>
-                <td>{{ item.anio_proceso }}</td>
-                <td>{{ item.fecha_inicio }}</td>
-                <td>{{ item.fecha_fin }}</td>
-                <td>{{ item.estado_proceso }}</td>
+                <td (click)="seleccionarProceso(item)">{{ item.process_name }}</td>
+                <td>{{ item.process_year }}</td>
+                <td>{{ item.start_date }}</td>
+                <td>{{ item.end_date }}</td>
+                <td>{{ item.process_status }}</td>
                 <td >
                   <button class="button_image" (click)="editarItem(item)">
                     <img src="../../../assets/Icons/editarIcon.png" />
@@ -74,15 +74,15 @@
               <h2>{{title_Model}}</h2>
               <form #processForm = "ngForm" (ngSubmit) = "onSubmit(processForm)">
                 <div class="form-group">
-                  <input type="text" id="nombreProceso" name="nombre_proceso" #nombre_proceso = "ngModel" [(ngModel)] = "newProcess.nombre_proceso" required>
+                  <input type="text" id="nombreProceso" name="nombre_proceso" #nombre_proceso = "ngModel" [(ngModel)] = "newProcess.process_name" required>
                   <label for="nombreProceso">Nombre del Proceso</label>
                 </div>
                 <div class="form-group">
-                  <input type="number" id="anioProceso" name="anio_proceso" #anio_proceso = "ngModel" [(ngModel)] = "newProcess.anio_proceso" required>
+                  <input type="number" id="anioProceso" name="anio_proceso" #anio_proceso = "ngModel" [(ngModel)] = "newProcess.process_year" required>
                   <label for="anioProceso">Año del Proceso</label>
                 </div>
                 <div class="form-group">
-                  <input type="date" id="fechaProceso" name="fecha_inicio" #fecha_inicio = "ngModel" [(ngModel)] = "newProcess.fecha_inicio" required>
+                  <input type="date" id="fechaProceso" name="fecha_inicio" #fecha_inicio = "ngModel" [(ngModel)] = "newProcess.start_date" required>
                   <label for="fechaProceso">Fecha</label>
                 </div>
                 <div class="form-actions">

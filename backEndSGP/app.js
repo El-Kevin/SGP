@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const projectRoutes = require('./routes/processRoutes');
 const userRoutes = require('./routes/userRoute');
+const detailProcessRoutes = require('./routes/detailProcessRoute') 
 const cors = require('cors'); // Importa el paquete CORS
 const app = express();
 //middlewares
@@ -18,5 +19,6 @@ app.use(cors({
 // Rutas
 app.use('/api', projectRoutes);
 app.use('/api', userRoutes);
+app.use('/api', detailProcessRoutes)
 //Exportar
 module.exports = app;
